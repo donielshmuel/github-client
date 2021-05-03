@@ -18,7 +18,7 @@ export const getCommitsForUser = (
 		)
 		.fetch()
 		.then((events) => {
-			if (events.items.length) {
+			if (events.items.length > 0) {
 				setTotalCommits(events.totalCount > 1000 ? 1000 : events.totalCount);
 				setCommits(
 					events.items
@@ -28,7 +28,7 @@ export const getCommitsForUser = (
 							date: item.commit.author.date,
 							url: item.htmlUrl,
 							name: item.author.login,
-							id: `${user}-${moment(
+							id: `${item.author.login}-${moment(
 								item.commit.author.date
 							).valueOf()}-${index}`,
 						}))
@@ -48,6 +48,7 @@ export const getCommitsForUser = (
 			}
 		})
 		.catch((e) => {
+			console.log(e);
 			setLoading(false);
 			if (setShow) {
 				setShow(true);

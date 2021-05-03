@@ -12,14 +12,27 @@ const HomePage = () => {
 	const { commits } = commitsCtx;
 	const [loading, setLoading] = useState(false);
 	const [show, setShow] = useState(false);
+	const [active, setActive] = useState(1);
+	const [firstPage, setFirstPage] = useState(1);
 
 	return (
 		<Container>
 			{show && <Error setShow={setShow} />}
-			<Search setLoading={setLoading} setShow={setShow} />
+			<Search
+				setLoading={setLoading}
+				setShow={setShow}
+				setActive={setActive}
+				setFirstPage={setFirstPage}
+			/>
 			{commits.length > 0 && <Filter />}
 			<CommitInfoList loading={loading} saved={false} />
-			<Pages setLoading={setLoading} />
+			<Pages
+				setLoading={setLoading}
+				active={active}
+				setActive={setActive}
+				firstPage={firstPage}
+				setFirstPage={setFirstPage}
+			/>
 		</Container>
 	);
 };

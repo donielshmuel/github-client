@@ -13,6 +13,8 @@ const Search = (props) => {
 		setCommits([]);
 		setTotalCommits(0);
 		props.setLoading(true);
+		props.setActive("1");
+		props.setFirstPage(1);
 		getCommitsForUser(
 			user,
 			1,
