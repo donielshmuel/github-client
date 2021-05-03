@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Card, ToggleButton, Button } from "react-bootstrap";
 import CommitsContext from "../store/commits-context";
 
-const CommitInfo = ({ date, message, url, id, isSaved }) => {
+const CommitInfo = ({ date, message, url, id, isSaved, name }) => {
 	const commitsCtx = useContext(CommitsContext);
 	const { savedCommits, setSavedCommits } = commitsCtx;
 
@@ -17,6 +17,12 @@ const CommitInfo = ({ date, message, url, id, isSaved }) => {
 				<Card.Title>{new Date(date).toLocaleDateString()}</Card.Title>
 
 				<Card.Text>{message}</Card.Text>
+				{isSaved && (
+					<Card.Text>
+						commited by
+						<strong>{` ${name}`}</strong>
+					</Card.Text>
+				)}
 				<div>
 					<a href={url} target="_blank" rel="noreferrer">
 						view code
@@ -32,7 +38,7 @@ const CommitInfo = ({ date, message, url, id, isSaved }) => {
 						name="radio"
 						checked={checked}
 						onChange={() => {
-							const commit = { date, message, url, id };
+							const commit = { date, message, url, id, name };
 							if (!checked) {
 								localStorage.setItem(
 									"commits",

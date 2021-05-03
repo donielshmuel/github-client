@@ -21,6 +21,7 @@ const CommitInfoList = (props) => {
 					date={commit.date}
 					message={commit.message}
 					url={commit.url}
+					name={commit.name}
 					key={commit.id}
 					id={commit.id}
 				/>

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { Pagination } from "react-bootstrap";
 import { getCommitsForUser } from "../utils/get-commits-for-user";
@@ -10,13 +11,6 @@ const Pages = (props) => {
 	const totalPages = Math.ceil(commitsCtx.totalCommits / 30);
 	const [firstPage, setFirstPage] = useState(1);
 	const [active, setActive] = useState(1);
-	useEffect(() => {
-		setFirstPage(1);
-		setActive("1");
-		if (user !== "") {
-			loadNextPage(1);
-		}
-	}, []);
 
 	const loadNextPage = (page) => {
 		props.setLoading(true);
@@ -28,6 +22,15 @@ const Pages = (props) => {
 			setTotalCommits
 		);
 	};
+
+	useEffect(() => {
+		setFirstPage(1);
+		setActive("1");
+		if (user !== "") {
+			loadNextPage(1);
+		}
+	}, []);
+
 	let items = [];
 	const endLimit =
 		totalPages >= MAXIMUM_PAGES ? firstPage + MAXIMUM_PAGES - 1 : totalPages;

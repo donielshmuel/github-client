@@ -18,23 +18,33 @@ export const getCommitsForUser = (
 		)
 		.fetch()
 		.then((events) => {
-			setTotalCommits(events.totalCount > 1000 ? 1000 : events.totalCount);
-			setCommits(
-				events.items
-					.slice(0, 1000)
-					.map((item, index) => ({
-						message: item.commit.message,
-						date: item.commit.author.date,
-						url: item.htmlUrl,
-						id: `${moment(item.commit.author.date).valueOf()}-${index}`,
-					}))
-					.sort((a, b) => {
-						return moment(a.date).valueOf() - moment(b.date).valueOf();
-					})
-			);
-			setLoading(false);
-			if (setShow) {
-				setShow(false);
+			if (events.items.length) {
+				setTotalCommits(events.totalCount > 1000 ? 1000 : events.totalCount);
+				setCommits(
+					events.items
+						.slice(0, 1000)
+						.map((item, index) => ({
+							message: item.commit.message,
+							date: item.commit.author.date,
+							url: item.htmlUrl,
+							name: item.author.login,
+							id: `${user}-${moment(
+								item.commit.author.date
+							).valueOf()}-${index}`,
+						}))
+						.sort((a, b) => {
+							return moment(a.date).valueOf() - moment(b.date).valueOf();
+						})
+				);
+				setLoading(false);
+				if (setShow) {
+					setShow(false);
+				}
+			} else {
+				setLoading(false);
+				if (setShow) {
+					setShow(true);
+				}
 			}
 		})
 		.catch((e) => {
